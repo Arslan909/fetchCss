@@ -21,14 +21,19 @@ document.addEventListener("DOMContentLoaded", function () {
 function fetchCss(element) {
     // this is just to create a ul element(list div containing property and values of the element) and set the css of that dic for a pop up view
     const propertyList = document.createElement("ul");
+
     propertyList.id = "proprty-list";
-    propertyList.style.position = "absolute";
-    propertyList.style.top = "40px";
-    propertyList.style.left = "50px";
+    const x = event.clientX + 10; 
+    const y = event.clientY + 10;
+
+    propertyList.style.left = `${x}px`;
+    propertyList.style.top = `${y}px`;
+
+    propertyList.style.position = "fixed";
     propertyList.style.backgroundColor = "white";
     propertyList.style.border = "1px solid #ccc";
     propertyList.style.padding = "10px";
-    // propertyList.style.zIndex = "1000";
+
     propertyList.style.width = "40%";
     propertyList.style.height = "50%";
     propertyList.style.display = "none";
@@ -55,10 +60,13 @@ function fetchCss(element) {
 
 // this will get the element on the page that user clicked and pas it to a function which fetches its css
 document.addEventListener('click', function (event) {
+    event.preventDefault();
+    event.stopImmediatePropagation()
+
     const element = event.target;
 
     // Check if the current URL starts with "http" or "https" to ensure it's a web page.
     if (window.location.href.startsWith('http') || window.location.href.startsWith('https')) {
-        fetchCss(element);
+        fetchCss(element, event);
     }
-});
+}, true);
