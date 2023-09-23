@@ -1,5 +1,5 @@
 let extensionEnabled = false;
-let propertyList = null;
+let propertyList = null; // this will hold the property list DIV element
 
 chrome.runtime.onMessage.addListener((message) => {
   if (message.enableScript) {
@@ -7,6 +7,7 @@ chrome.runtime.onMessage.addListener((message) => {
   }
 });
 
+// this will set the intiall property of a properties list DIV
 function createPropertyList() {
   if (!propertyList) {
     propertyList = document.createElement("div");
@@ -22,7 +23,7 @@ function createPropertyList() {
     propertyList.style.display = "none";
     propertyList.style.overflowY = "scroll";
 
-    // Prevent click events on the property list and its content
+    //handle click on th property list div(disable it)
     propertyList.addEventListener("click", function (event) {
       event.stopPropagation();
     });
@@ -32,7 +33,6 @@ function createPropertyList() {
 function clearPropertyList() {
   if (propertyList) {
     propertyList.textContent = '';
-    // Hide the property list after clearing
     propertyList.style.display = "none";
   }
 }
@@ -55,7 +55,7 @@ function fetchCss(element, event) {
   }
 
   if (propertyArray.length > 0) {
-    // Add a close button if there are properties
+    //close button 
     const closeButton = document.createElement("button");
     closeButton.textContent = "Close";
     closeButton.addEventListener("click", function () {
@@ -63,14 +63,14 @@ function fetchCss(element, event) {
     });
     propertyList.appendChild(closeButton);
 
-    // Append the properties and values
+    // appending properties and their values to the div
     propertyArray.forEach((propertyValue) => {
       const listItem = document.createElement("div");
       listItem.textContent = propertyValue;
       propertyList.appendChild(listItem);
     });
 
-    // Append the property list to the document body
+    // Append the property list to body
     document.body.appendChild(propertyList);
     propertyList.style.display = "block";
   }
