@@ -1,5 +1,5 @@
 let extensionEnabled = false;
-let propertyList = null; // this will hold the property list DIV element
+let propertyList = null; // This will hold the property list DIV element
 
 chrome.runtime.onMessage.addListener((message) => {
   if (message.enableScript) {
@@ -7,28 +7,36 @@ chrome.runtime.onMessage.addListener((message) => {
   }
 });
 
-// this will set the intiall property of a properties list DIV
+// This will set the initial properties of a properties list DIV
 function createPropertyList() {
   if (!propertyList) {
     propertyList = document.createElement("div");
     propertyList.id = "property-list";
 
+    // Apply modern styles
     propertyList.style.position = "fixed";
-    propertyList.style.backgroundColor = "white";
-    propertyList.style.border = "1px solid #ccc";
-    propertyList.style.padding = "10px";
-
-    propertyList.style.width = "40%";
+    propertyList.style.backgroundColor = "#FAF1E4";
+    propertyList.style.border = "1px solid #e0e0e0";
+    propertyList.style.padding = "15px";
+    propertyList.style.borderRadius = "5px";
+    propertyList.style.boxShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)"; // Drop shadow
+    propertyList.style.width = "25%";
     propertyList.style.height = "50%";
-    propertyList.style.display = "none";
     propertyList.style.overflowY = "scroll";
-
-    //handle click on th property list div(disable it)
-    propertyList.addEventListener("click", function (event) {
-      event.stopPropagation();
-    });
+    propertyList.style.color = "#191717"; // Fixed color value
+    propertyList.style.fontSize = "18px";
   }
 }
+
+function copyPropertiesToClipboard() {
+  const propertiesText = Array.from(propertyList.querySelectorAll("div")).map((item) => item.textContent).join("\n");
+
+  navigator.clipboard.writeText(propertiesText).then(function () {
+  }).catch(function (err) {
+    console.error('Error copying text to clipboard: ', err);
+  });
+}
+
 
 function clearPropertyList() {
   if (propertyList) {
@@ -55,7 +63,7 @@ function fetchCss(element, event) {
   }
 
   if (propertyArray.length > 0) {
-    //close button 
+    // Close button
     const closeButton = document.createElement("button");
     closeButton.textContent = "Close";
     closeButton.addEventListener("click", function () {
@@ -63,15 +71,24 @@ function fetchCss(element, event) {
     });
     propertyList.appendChild(closeButton);
 
-    // appending properties and their values to the div
+    // Add a "Copy to Clipboard" button
+    const copyButton = document.createElement("button");
+    copyButton.textContent = "Copy to Clipboard";
+    copyButton.addEventListener("click", function () {
+      copyPropertiesToClipboard();
+    });
+    propertyList.appendChild(copyButton);
+
+    // Appending properties and their values to the div
     propertyArray.forEach((propertyValue) => {
       const listItem = document.createElement("div");
       listItem.textContent = propertyValue;
       propertyList.appendChild(listItem);
     });
 
-    // Append the property list to body
+    // Append the property list to the body
     document.body.appendChild(propertyList);
+
     propertyList.style.display = "block";
   }
 }

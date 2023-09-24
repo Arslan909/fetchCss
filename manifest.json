@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CSS Properties Viewer",
-  "version": "1.0",
+  "version": "1.0.1",
   "description": "View CSS properties of an element.",
   "permissions": ["activeTab"],
   "background": {
