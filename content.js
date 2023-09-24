@@ -31,10 +31,9 @@ function createPropertyList() {
 function copyPropertiesToClipboard() {
   const propertiesText = Array.from(propertyList.querySelectorAll("div")).map((item) => item.textContent).join("\n");
 
-  navigator.clipboard.writeText(propertiesText).then(function () {
-  }).catch(function (err) {
-    console.error('Error copying text to clipboard: ', err);
-  });
+  navigator.clipboard.writeText(propertiesText)
+  .then(() => console.log("Copied to clipboard"))
+  .catch(function (err) {console.error('Error copying text to clipboard: ', err);});
 }
 
 
