@@ -7,23 +7,27 @@ chrome.runtime.onMessage.addListener((message) => {
   }
 });
 
+
+// TODO- add search option for the properties list in the list div 
+// - fix the copy to clip board button
+
+
 // This will set the initial properties of a properties list DIV
 function createPropertyList() {
   if (!propertyList) {
     propertyList = document.createElement("div");
     propertyList.id = "property-list";
 
-    // Apply modern styles
     propertyList.style.position = "fixed";
     propertyList.style.backgroundColor = "#FAF1E4";
     propertyList.style.border = "1px solid #e0e0e0";
     propertyList.style.padding = "15px";
     propertyList.style.borderRadius = "5px";
-    propertyList.style.boxShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)"; // Drop shadow
+    propertyList.style.boxShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)";
     propertyList.style.width = "25%";
     propertyList.style.height = "50%";
     propertyList.style.overflowY = "scroll";
-    propertyList.style.color = "#191717"; // Fixed color value
+    propertyList.style.color = "#191717";
     propertyList.style.fontSize = "18px";
   }
 }
@@ -103,7 +107,7 @@ document.addEventListener("click", function (event) {
         createPropertyList();
         clearPropertyList();
         fetchCss(element, event);
-      }
+      }a
     }
   }
 }, true);
